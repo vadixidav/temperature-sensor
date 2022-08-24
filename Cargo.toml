@@ -1,0 +1,49 @@
+[package]
+name = "temperature-sensor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embassy-sync = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    "defmt",
+] }
+embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    "defmt",
+    "integrated-timers",
+] }
+embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    "defmt",
+    "defmt-timestamp-uptime",
+    "tick-32768hz",
+] }
+embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git" }
+embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    "nightly",
+    "defmt",
+    "unstable-pac",
+    "stm32l433rc",
+    "time-driver-any",
+    "exti",
+    "unstable-traits",
+] }
+
+defmt = "0.3"
+defmt-rtt = "0.3"
+
+cortex-m = { version = "0.7.6", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7.0"
+embedded-hal = "0.2.6"
+embedded-hal-1 = { package = "embedded-hal", version = "1.0.0-alpha.8" }
+embedded-hal-async = { version = "0.1.0-alpha.1" }
+panic-probe = { version = "0.3", features = ["print-defmt"] }
+futures = { version = "0.3.17", default-features = false, features = [
+    "async-await",
+] }
+heapless = { version = "0.7.5", default-features = false }
+
+micromath = "2.0.0"
+usb-device = "0.2"
+usbd-serial = "0.1.1"
+
+[target.'cfg(not(target_os = "none"))'.dependencies]
+log = "0.4.17"
