@@ -1,10 +1,10 @@
+use std::env;
+use std::fs::File;
+use std::io::Write;
+use std::path::PathBuf;
+
 fn main() {
-    #[cfg(target_os = "none")]
-    {
-        use std::env;
-        use std::fs::File;
-        use std::io::Write;
-        use std::path::PathBuf;
+    if env::var("CARGO_CFG_TARGET_OS").unwrap() == "none" {
         // Put `memory.x` in our output directory and ensure it's
         // on the linker search path.
         let out = &PathBuf::from(env::var_os("OUT_DIR").unwrap());
