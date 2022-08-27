@@ -32,12 +32,7 @@ async fn blah() {
     }
 }
 
-#[cfg(target_os = "none")]
 #[embassy_executor::main]
 async fn main(spawner: embassy_executor::Spawner) -> ! {
     spawner.spawn(blah()).unwrap();
 }
-
-#[cfg(not(target_os = "none"))]
-#[tokio::main]
-async fn main() {}

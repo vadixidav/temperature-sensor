@@ -47,11 +47,13 @@ usbd-serial = "0.1.1"
 
 [target.'cfg(not(target_os = "none"))'.dependencies]
 log = "0.4.17"
-tokio = { version = "1.20.1", default-features = false, features = [
-    "macros",
-    "rt",
-    "rt-multi-thread",
+embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
+    "defmt",
+    "integrated-timers",
+    "std",
 ] }
+
+[target.'cfg(target_os = "none")'.dependencies]
 
 [profile.release]
 debug = 2
