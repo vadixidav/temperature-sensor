@@ -7,7 +7,6 @@ use defmt as log;
 use embassy_stm32::adc::{Adc, Resolution};
 use embassy_stm32::pac;
 use embassy_time::Delay;
-use log::*;
 use {defmt_rtt as _, panic_probe as _};
 
 #[embassy_executor::task]
@@ -22,13 +21,12 @@ async fn blah() {
     let p = embassy_stm32::init(Default::default());
 
     let mut adc = Adc::new(p.ADC1, &mut Delay);
-    //adc.enable_vref();
     adc.set_resolution(Resolution::EightBit);
     let mut channel = p.PC0;
 
     loop {
         let v = adc.read(&mut channel);
-        info!("--> {}", v);
+        log::info!("--> {}", v);
     }
 }
 
