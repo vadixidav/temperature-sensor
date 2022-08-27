@@ -47,3 +47,12 @@ usbd-serial = "0.1.1"
 
 [target.'cfg(not(target_os = "none"))'.dependencies]
 log = "0.4.17"
+tokio = { version = "1.20.1", default-features = false, features = [
+    "macros",
+    "rt",
+    "rt-multi-thread",
+] }
+
+[profile.release]
+debug = 2
+opt-level = "s"

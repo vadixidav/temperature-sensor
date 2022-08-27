@@ -3,18 +3,15 @@
 #![feature(type_alias_impl_trait)]
 
 #[cfg(target_os = "none")]
-use defmt::*;
+use defmt as log;
 use embassy_stm32::adc::{Adc, Resolution};
 use embassy_stm32::pac;
 use embassy_time::Delay;
-#[cfg(not(target_os = "none"))]
 use log::*;
 use {defmt_rtt as _, panic_probe as _};
 
-#[cfg_attr(target_os = "none", cortex_m_rt::entry)]
-fn main() -> ! {
-    info!("Hello World!");
-
+#[embassy_executor::task]
+async fn blah() {
     unsafe {
         pac::RCC.ccipr().modify(|w| {
             w.set_adcsel(0b11);
@@ -34,3 +31,13 @@ fn main() -> ! {
         info!("--> {}", v);
     }
 }
+
+#[cfg(target_os = "none")]
+#[embassy_executor::main]
+async fn main(spawner: embassy_executor::Spawner) -> ! {
+    spawner.spawn(blah()).unwrap();
+}
+
+#[cfg(not(target_os = "none"))]
+#[tokio::main]
+async fn main() {}
